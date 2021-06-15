@@ -1,0 +1,96 @@
+plugins {
+   id 'java-gradle-plugin'
+   id 'java-library'
+   id 'maven-publish'
+   id 'signing'
+}
+
+group='io.github.bralax'
+version='0.1'
+gradlePlugin {
+    plugins {
+        shotputPlugin {
+            id = 'io.github.bralax.shotput'
+            implementationClass = 'io.github.bralax.shotput.gradle.ShotputPlugin'
+        }
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation group: 'io.github.bralax', name: 'shotput', version: '0.2'
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId='io.github.bralax'
+            artifactId = 'shotput-gradle'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'ShotPut Gradle'
+                description = 'A gradle plugin for using ShotPut'
+                url = 'https://github.com/bralax/ShotPut-gradle'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'bralax'
+                        name = 'Brandon Lax'
+                        email = 'bralax12@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://www.github.com/bralax/ShotPut-gradle.git'
+                    developerConnection = 'scm:git:ssh://www.github.com/bralax/ShotPut-gradle.git'
+                    url = 'http://ewww.github.com/bralax/ShotPut-gradle'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}
+
+signing {
+   sign publishing.publications.mavenJava
+   useGpgCmd()
+   sign configurations.archives
+}
+
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
