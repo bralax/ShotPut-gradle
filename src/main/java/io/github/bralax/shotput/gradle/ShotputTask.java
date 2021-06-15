@@ -25,6 +25,7 @@ public class ShotputTask extends DefaultTask {
         Project project = this.getProject();
         File src = config.srcDir != null ? config.srcDir : project.file("src/main/java/");
         File out = config.outputDir != null ? config.outputDir : project.file("docs/");
+        Shotput.setLogger(project.getLogger());
         Shotput shot = new Shotput(config, 
                                    src, 
                                    config.generateExcel != null ? config.generateExcel : false, 

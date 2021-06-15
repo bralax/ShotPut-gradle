@@ -3,25 +3,29 @@ plugins {
    id 'java-library'
    id 'maven-publish'
    id 'signing'
+   id 'com.gradle.plugin-publish' version '0.14.0'
 }
 
 group='io.github.bralax'
-version='0.1'
+version='0.2'
 gradlePlugin {
     plugins {
         shotputPlugin {
             id = 'io.github.bralax.shotput'
             implementationClass = 'io.github.bralax.shotput.gradle.ShotputPlugin'
+            displayName='ShotPut Plugin'
+            description='A plugin for integrating a gradle project with ShotPut'
         }
     }
 }
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     implementation gradleApi()
-    implementation group: 'io.github.bralax', name: 'shotput', version: '0.2'
+    implementation group: 'io.github.bralax', name: 'shotput', version: '0.3'
 }
 
 java {
@@ -31,6 +35,12 @@ java {
         languageVersion = JavaLanguageVersion.of(11)
     }
 
+}
+
+pluginBundle {
+    website='https://github.com/bralax/ShotPut-gradle'
+    vcsUrl='https://github.com/bralax/ShotPut-gradle.git'
+    tags=['Javalin', 'Documentation', 'ShotPut', 'API']
 }
 
 publishing {
