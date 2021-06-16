@@ -8,7 +8,7 @@ Just add the following to your `build.gradle` file.
 ```GROOVY
 plugin {
     ...
-    id 'io.github.bralax.shotput' version '0.1'
+    id 'io.github.bralax.shotput' version '0.1.1'
     ...
 }
 ```

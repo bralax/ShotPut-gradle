@@ -15,6 +15,7 @@ public class ShotputTask extends DefaultTask {
 
     /**
      * The task to be added.
+     * @throws IOException if the specified soure or destination folder does not exist
      */
     @TaskAction
     public void generate() throws IOException {
