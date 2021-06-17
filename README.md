@@ -8,7 +8,7 @@ Just add the following to your `build.gradle` file.
 ```GROOVY
 plugin {
     ...
-    id 'io.github.bralax.shotput' version '0.1.1'
+    id 'io.github.bralax.shotput' version '0.2.2'
     ...
 }
 ```
@@ -24,8 +24,9 @@ shotputSetting {
     baseUrl = 'http://example.base.url.com' // The base url of api used for example endpoints
     interactive = true //Whether to offer the ability to send test requests
     languages = ['java'] // Example request languages. Currently only java (unirest) is supported
+    disableMethodParsing = true //See https://github.com/bralax/ShotPut#disable-method-parsing for information on this setting
     logo = 'path/to/logo/file'
-    
+
     // Settings moved from the command line when not using gradle
     srcDir = layout.getProjectDirectory().dir('src')
     outputDir = layout.getProjectDirectory().dir('docs')
